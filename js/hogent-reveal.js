@@ -16,30 +16,18 @@ Reveal.initialize({
 
 	plugins: [RevealHighlight, RevealMath],
 	dependencies: [
-		// {
-		// 	src: 'plugin/highlight/highlight.js',
-		// 	async: true,
-		// 	callback: function () {
-		// 		hljs.initHighlightingOnLoad();
-
-		// 		if (thisScript.getAttribute('data-start-at-last') === 'true') {
-		// 			Reveal.slide(Reveal.getTotalSlides());
-		// 		}
-		// 	},
-		// },
 		{ src: 'plugin/codestepper/svgstepper.js' },
 		{
 			src: 'plugin/hogent-style.js',
-			callback: () => {
-				if (thisScript.getAttribute('data-start-at-last') === 'true') {
-					Reveal.slide(Reveal.getTotalSlides());
-				}
-				return hogentStyle.initialize();
-			},
 		},
 		{
 			src: 'plugin/chart.xkcd/chart.xkcd.js',
 		},
 		// { src: 'plugin/math/math.js', async: true },
 	],
+}).then(() => {
+	if (thisScript.getAttribute('data-start-at-last') === 'true') {
+		Reveal.slide(Reveal.getTotalSlides());
+	}
+	hogentStyle.initialize();
 });
