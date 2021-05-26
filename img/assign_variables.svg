@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" viewBox="-234 89 867 694" width="867" height="694">
+  <defs>
+    <font-face font-family="Menlo" font-size="24" panose-1="2 11 6 9 3 8 4 2 2 4" units-per-em="1000" underline-position="-63.47656" underline-thickness="43.94531" slope="0" x-height="546.875" cap-height="729.0039" ascent="928.2227" descent="-235.83984" font-weight="400">
+      <font-face-src>
+        <font-face-name name="Menlo-Regular"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Menlo" font-size="30" panose-1="2 11 6 9 3 8 4 2 2 4" units-per-em="1000" underline-position="-63.47656" underline-thickness="43.94531" slope="0" x-height="546.875" cap-height="729.0039" ascent="928.2227" descent="-235.83984" font-weight="400">
+      <font-face-src>
+        <font-face-name name="Menlo-Regular"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledBall_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -3 5 6" markerWidth="5" markerHeight="6" color="black">
+      <g>
+        <circle cx="1.3999994" cy="0" r="1.39999876271888" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.18.5\n2021-05-20 08:56:04 +0000</metadata>
+  <g id="svgstep" stroke-opacity="1" stroke="none" fill="none" fill-opacity="1" stroke-dasharray="none">
+    <title>svgstep</title>
+    <g id="svgstep_show_1+">
+      <title>show 1+</title>
+      <g id="Graphic_18">
+        <text transform="translate(-227.644 239)" fill="black">
+          <tspan font-family="Menlo" font-size="24" font-weight="400" fill="black" x="0" y="22">let a = 6;</tspan>
+          <tspan font-family="Menlo" font-size="24" font-weight="400" fill="black" x="0" y="59">let b = a;</tspan>
+          <tspan font-family="Menlo" font-size="24" font-weight="400" fill="black" x="0" y="96">a = ‘rudy’;</tspan>
+          <tspan font-family="Menlo" font-size="24" font-weight="400" fill="black" x="0" y="170">a = {};</tspan>
+          <tspan font-family="Menlo" font-size="24" font-weight="400" fill="black" x="0" y="207">b = a;</tspan>
+          <tspan font-family="Menlo" font-size="24" font-weight="400" fill="black" x="0" y="281">b = {};</tspan>
+        </text>
+      </g>
+    </g>
+    <g id="svgstep_anim_appear_2+">
+      <title>anim_appear 2+</title>
+      <g id="Graphic_7">
+        <title>var a</title>
+        <rect x="58.5" y="180" width="111" height="107" fill="white"/>
+        <rect x="58.5" y="180" width="111" height="107" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(63.5 216)" fill="black">
+          <tspan font-family="Menlo" font-size="30" font-weight="400" fill="black" x="41.46924" y="28">a</tspan>
+        </text>
+      </g>
+    </g>
+    <g id="svgstep_show_2">
+      <title>show 2</title>
+      <g id="Graphic_19">
+        <title>let a</title>
+        <rect x="-232.644" y="236" width="84.144" height="33.5" fill="yellow" fill-opacity=".23405675"/>
+        <rect x="-232.644" y="236" width="84.144" height="33.5" stroke="#fffc00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+    <g id="svgstep_show_3+">
+      <title>show 3+</title>
+      <g id="Graphic_4">
+        <title>6</title>
+        <ellipse cx="581.25" cy="344" rx="49.7500794956192" ry="50.0000798950948" fill="white"/>
+        <ellipse cx="581.25" cy="344" rx="49.7500794956192" ry="50.0000798950948" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(546.45 326.5)" fill="black">
+          <tspan font-family="Menlo" font-size="30" font-weight="400" fill="black" x="25.769238" y="28">6</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <title>rudy</title>
+        <ellipse cx="469.75" cy="171.5" rx="88.7501418137934" ry="50.0000798950948" fill="white"/>
+        <ellipse cx="469.75" cy="171.5" rx="88.7501418137934" ry="50.0000798950948" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(403.75 154)" fill="black">
+          <tspan font-family="Menlo" font-size="30" font-weight="400" fill="black" x="11.81543" y="28">‘rudy’</tspan>
+        </text>
+      </g>
+    </g>
+    <g id="svgstep_show_3-4">
+      <title>show 3-4</title>
+      <g id="Graphic_20">
+        <title>a=6</title>
+        <rect x="-177" y="236" width="95" height="33.5" fill="yellow" fill-opacity=".234057"/>
+        <rect x="-177" y="236" width="95" height="33.5" stroke="#fffc00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+    <g id="svgstep_anim_drawline_4-5">
+      <title>anim_drawline 4-5</title>
+      <g id="Line_9">
+        <title>a-&gt;6</title>
+        <path d="M 171 228.65195 C 207.05042 228.3968 255.71918 233.00042 303.5 253 C 396.5657 291.95444 363.81204 345.21924 442.5 371 C 474.7684 381.5722 503.9046 378.933 527.051 372.14" marker-end="url(#FilledBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+    </g>
+    <g id="svgstep_show_5">
+      <title>show 5</title>
+      <g id="Graphic_22">
+        <title>let b=a</title>
+        <rect x="-231.644" y="275" width="149.644" height="33.5" fill="yellow" fill-opacity=".234057"/>
+        <rect x="-231.644" y="275" width="149.644" height="33.5" stroke="#fffc00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+    <g id="svgstep_anim_appear_5+">
+      <title>anim_appear 5+</title>
+      <g id="Graphic_8">
+        <title>b</title>
+        <rect x="51" y="443.5" width="111" height="107" fill="white"/>
+        <rect x="51" y="443.5" width="111" height="107" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(56 479.5)" fill="black">
+          <tspan font-family="Menlo" font-size="30" font-weight="400" fill="black" x="41.46924" y="28">b</tspan>
+        </text>
+      </g>
+    </g>
+    <g id="svgstep_anim_drawline_5-8">
+      <title>anim_drawline 5-8</title>
+      <g id="Line_11">
+        <title>b-&gt;6</title>
+        <path d="M 163.5 504.8477 C 199.79836 508.3053 250.02954 510.4836 304 505 C 409.95607 494.2344 401.9537 504.6121 480.5 459 C 512.7097 440.2957 535.4449 417.5933 551.0596 397.3171" marker-end="url(#FilledBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+    </g>
+    <g id="svgstep_anim_drawline_6-7">
+      <title>anim_drawline 6-7</title>
+      <g id="Line_12">
+        <title>a-&gt;rudy</title>
+        <path d="M 134.7108 178.5 C 151.02603 142.42376 176.21327 100.56811 207.5 93 C 264.30265 79.25971 240.20326 162.76056 314.5 185 C 335.32737 191.23431 356.67783 192.91246 376.62143 192.09897" marker-end="url(#FilledBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+    </g>
+    <g id="svgstep_show_6">
+      <title>show 6</title>
+      <g id="Graphic_21">
+        <title>a=rudy</title>
+        <rect x="-232.644" y="308.5" width="168.9414" height="33.5" fill="yellow" fill-opacity=".234057"/>
+        <rect x="-232.644" y="308.5" width="168.9414" height="33.5" stroke="#fffc00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+    <g id="svgstep_show_7-8">
+      <title>show 7-8</title>
+      <g id="Graphic_23">
+        <title>a={}</title>
+        <rect x="-232.644" y="384.25" width="111" height="33.5" fill="yellow" fill-opacity=".234057"/>
+        <rect x="-232.644" y="384.25" width="111" height="33.5" stroke="#fffc00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+    <g id="svgstep_anim_appear_7+">
+      <title>anim_appear 7+</title>
+      <g id="Graphic_6">
+        <title>{}</title>
+        <ellipse cx="557.25" cy="607.5" rx="49.7500794956193" ry="50.0000798950949" fill="white"/>
+        <ellipse cx="557.25" cy="607.5" rx="49.7500794956193" ry="50.0000798950949" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(522.45 590)" fill="black">
+          <tspan font-family="Menlo" font-size="30" font-weight="400" fill="black" x="16.738476" y="28">{}</tspan>
+        </text>
+      </g>
+    </g>
+    <g id="svgstep_anim_drawline_8+">
+      <title>anim_drawline 8+</title>
+      <g id="Line_14">
+        <title>a-&gt;{}</title>
+        <path d="M 171 262.75772 C 211.38563 284.19615 268.9629 316.09785 329.5 354 C 442.39704 424.6846 447.9773 411.1822 512.5 483 C 533.78095 506.687 545.8921 528.29244 552.5672 546.61265" marker-end="url(#FilledBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+    </g>
+    <g id="svgstep_show_9">
+      <title>show 9</title>
+      <g id="Graphic_24">
+        <title>let a</title>
+        <rect x="-232.644" y="417.75" width="111" height="33.5" fill="yellow" fill-opacity=".234057"/>
+        <rect x="-232.644" y="417.75" width="111" height="33.5" stroke="#fffc00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+    <g id="svgstep_anim_drawline_9-10">
+      <title>anim_drawline 9-10</title>
+      <g id="Line_17">
+        <title>b-&gt;a</title>
+        <path d="M 163.5 531.99565 C 193.70336 547.5457 233.88005 564.0991 279 572 C 376.8819 589.13995 373.1704 547.4427 452 557.5 C 474.6825 560.3939 493.02576 565.76215 507.649 571.9412" marker-end="url(#FilledBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+    </g>
+    <g id="svgstep_anim_appear_10+">
+      <title>anim_appear 10+</title>
+      <g id="Graphic_5">
+        <ellipse cx="391.25" cy="731" rx="49.7500794956194" ry="50.0000798950949" fill="white"/>
+        <ellipse cx="391.25" cy="731" rx="49.7500794956194" ry="50.0000798950949" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(356.45 713.5)" fill="black">
+          <tspan font-family="Menlo" font-size="30" font-weight="400" fill="black" x="16.738476" y="28">{}</tspan>
+        </text>
+      </g>
+    </g>
+    <g id="svgstep_anim_drawline_11+">
+      <title>anim_drawline 11+</title>
+      <g id="Line_15">
+        <path d="M 105.59801 552 C 107.78403 586.3989 116.07636 628.1868 141.5 650 C 189.37855 691.0792 204.74458 619.0523 275.5 642 C 305.3533 651.68215 330.6207 669.0377 349.85755 685.86794" marker-end="url(#FilledBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+    </g>
+    <g id="svgstep_show_10-11">
+      <title>show 10-11</title>
+      <g id="Graphic_25">
+        <title>b={}</title>
+        <rect x="-232.644" y="493.5" width="111" height="33.5" fill="yellow" fill-opacity=".234057"/>
+        <rect x="-232.644" y="493.5" width="111" height="33.5" stroke="#fffc00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

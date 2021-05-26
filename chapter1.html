@@ -46,37 +46,45 @@
 						<div class="two-columns">
 							<div class="column-one">
 								<li>
-									<a href="#/list">intro</a> <br />
-									<span> list example </span>
+									<a href="#/list">intro</a>
+									<br />
+									<span>list example</span>
 								</li>
 								<li>
-									<a href="#/code">code</a><br />
+									<a href="#/code">code</a>
+									<br />
 									<span>step through piece of code</span>
 								</li>
 								<li>
-									<a href="#/image">image</a><br />
+									<a href="#/image">image</a>
+									<br />
 									<span>image with some text</span>
 								</li>
 								<li>
-									<a href="#/chart">chart</a><br />
+									<a href="#/chart">chart</a>
+									<br />
 									<span>json data based charts</span>
 								</li>
 							</div>
 							<div class="column-two">
 								<li>
-									<a href="#/gif">gif</a><br />
+									<a href="#/gif">gif</a>
+									<br />
 									<span>animated gif</span>
 								</li>
 								<li>
-									<a href="#/svgslide">svg</a><br />
+									<a href="#/svgslide">svg</a>
+									<br />
 									<span>step through an svg</span>
 								</li>
 								<li>
-									<a href="#/animatedsvg">animated svg</a><br />
+									<a href="#/animatedsvg">animated svg</a>
+									<br />
 									<span>an animated svg</span>
 								</li>
 								<li>
-									<a href="#/math">math</a><br />
+									<a href="#/math">math</a>
+									<br />
 									<span>LateX based equations</span>
 								</li>
 							</div>
@@ -123,8 +131,9 @@
 							</span>
 							<span step="2">
 								if we make two consecutive calls to the
-								<span class="ilcode">getRecipes$</span> and their results arrive
-								out of order, we end up in an inconsistent state
+								<span class="ilcode">getRecipes$</span>
+								and their results arrive out of order, we end up in an
+								inconsistent state
 							</span>
 							<span step="3">
 								when a new filter comes in, we basically want to completely
@@ -138,18 +147,21 @@
 								i.s.o. immediately subscribing to new parameters, we will map
 								each parameter to a list of recipes
 							</span>
-							<span step="5"> so remove the subscribe</span>
+							<span step="5">so remove the subscribe</span>
 							<span step="5">
 								and replace it with piping the result through a map function
 							</span>
 							<span step="6">
-								we're in <span class="ilcode">Observable</span> of
-								<span class="ilcode">Observable</span> territory here, so we
-								need to flatten this
+								we're in
+								<span class="ilcode">Observable</span>
+								of
+								<span class="ilcode">Observable</span>
+								territory here, so we need to flatten this
 							</span>
 							<span step="6">
-								we'll use <span class="ilcode">switchMap</span> to only process
-								the last filter
+								we'll use
+								<span class="ilcode">switchMap</span>
+								to only process the last filter
 							</span>
 							<span step="7">
 								because of our restructuring, we need to move the
@@ -157,8 +169,8 @@
 							</span>
 							<span step="8">
 								that's it, lets
-								<a href="http://localhost:4200">try this out</a> and see that
-								our cypress tests no longer fail
+								<a href="http://localhost:4200">try this out</a>
+								and see that our cypress tests no longer fail
 							</span>
 						</div>
 					</div>
@@ -196,35 +208,15 @@
 					<img src="img/babyyoda.gif" alt="the child" />
 				</section>
 				<section id="svgslide">
-					<h3>step through an svg.</h3>
-					<div class="fragment" svg-step>
-						<svg
-							id="svg"
-							class="svg-section"
-							width="100%"
-							height="100%"
-							preserveAspectRatio="xMidYMid"
-							snapfile="svg/url-local-statesync.svg"
-						>
-							<use xlink:href="plugin/codestepper/loaders.svg#myloader"></use>
-						</svg>
+					<div>
+						<object
+							data="img/assign_variables.svg"
+							type="image/svg+xml"
+							data-svgstep
+						></object>
 					</div>
 				</section>
-				<section id="animatedsvg">
-					<h3>animated svg.</h3>
-					<div class="fragment" svg-step>
-						<svg
-							id="svg2"
-							class="svg-section"
-							width="100%"
-							height="100%"
-							preserveAspectRatio="xMidYMid"
-							snapfile="svg/test_anim.svg"
-						>
-							<use xlink:href="plugin/codestepper/loaders.svg#myloader"></use>
-						</svg>
-					</div>
-				</section>
+
 				<section id="math">
 					<h3>Math equations using LateX.</h3>
 					<div>
@@ -234,7 +226,8 @@
               and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$ 
             &lt;/p&gt;
             </pre>
-						is turned into: <br />
+						is turned into:
+						<br />
 						<p>
 							When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\)
 							and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
@@ -246,10 +239,13 @@
 
 		<script src="lib/js/chart.xkcd.min.js"></script>
 		<script src="js/reveal.js"></script>
-		<script src="plugin/codestepper/codestepper.js"></script>
+		<script src="plugin/codestepper/sectionhider.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
 		<script src="plugin/math/math.js"></script>
-		<script src="js/hogent-reveal.js" data-start-at-last="false"></script>
-		<script src="js/snap.svg.js"></script>
+		<script
+			src="js/hogent-reveal.js"
+			type="module"
+			data-start-at-last="false"
+		></script>
 	</body>
 </html>

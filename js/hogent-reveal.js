@@ -1,5 +1,7 @@
 // initialization for every slide deck
-const thisScript = document.currentScript;
+import { CodeStepper } from '../plugin/codestepper/codestepper.js';
+import { SvgStepper } from '../plugin/codestepper/svgstepper.js';
+SectionHider.initialize();
 CodeStepper.initialize();
 Reveal.initialize({
 	backgroundTransition: 'slide',
@@ -14,20 +16,25 @@ Reveal.initialize({
 		// TeX: { Macros: macros }
 	},
 
-	plugins: [RevealHighlight, RevealMath],
+	plugins: [RevealHighlight, RevealMath, SvgStepper],
+	highlight: {
+		tabReplace: '  ',
+	},
 	dependencies: [
-		{ src: 'plugin/codestepper/svgstepper.js' },
+		// { src: 'plugin/codestepper/svgstepper.js' },
 		{
 			src: 'plugin/hogent-style.js',
+			callback: () => hogentStyle.initialize(),
 		},
 		{
 			src: 'plugin/chart.xkcd/chart.xkcd.js',
 		},
-		// { src: 'plugin/math/math.js', async: true },
 	],
 }).then(() => {
-	if (thisScript.getAttribute('data-start-at-last') === 'true') {
+	if (
+		document.querySelector('script[data-start-at-last]').dataset.startAtLast ===
+		'true'
+	) {
 		Reveal.slide(Reveal.getTotalSlides());
 	}
-	hogentStyle.initialize();
 });

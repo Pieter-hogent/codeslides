@@ -1,6 +1,183 @@
-var SvgStepper =
-	window.SvgStepper ||
-	(function () {
+import {
+	Range,
+	parseCodeExplanations,
+	createExplanationDivForIndex,
+} from './explanationdiv.js';
+
+const SvgElementState = {
+	SETUP: 'SETUP',
+	ACTIVATED: 'ACTIVATED',
+	DEACTIVATED: 'DEACTIVATED',
+};
+class SvgElement {
+	constructor(el, showRange, { setup, activate, deactivate }) {
+		this.svgElement = el;
+		this.showRange = showRange;
+		this.activate = activate;
+		this.deactivate = deactivate;
+		setup(this.svgElement);
+		this.state = SvgElementState.SETUP;
+	}
+	update(index) {
+		// console.log(`update for index ${index}`);
+		if (!this.showRange || this.showRange.includes(index)) {
+			if (
+				this.state === SvgElementState.SETUP ||
+				this.state === SvgElementState.DEACTIVATED
+			) {
+				this.activate(this.svgElement);
+				this.state = SvgElementState.ACTIVATED;
+			}
+		} else {
+			if (this.state === SvgElementState.ACTIVATED) {
+				this.deactivate(this.svgElement);
+				this.state = SvgElementState.DEACTIVATED;
+			}
+		}
+	}
+}
+
+// simply show or hide (hidden on setup)
+const showHideActivation = {
+	setup: (el) => {
+		let anim = el.animate({ opacity: 0.0 }, { duration: 1, fill: 'forwards' });
+		anim.commitStyles();
+		// simply setting these doesn't work (it doesn't reset opacity set by a previous animation)
+		// (all still experimental, no idea what's supposed to happen, bloody annoying to google
+		// about these things as well)
+		// el.style.opacity = 0.0;
+		// el.style['animation-fill-mode'] = 'forwards';
+	},
+	activate: (el) => {
+		let anim = el.animate(
+			{ opacity: 1.0 },
+			{ duration: 250, easing: 'ease-in-out', fill: 'forwards' }
+		);
+		anim.commitStyles();
+	},
+	deactivate: (el) => {
+		let anim = el.animate({ opacity: 0.0 }, { duration: 1, fill: 'forwards' });
+		anim.commitStyles();
+	},
+};
+
+// line or paths are 'drawn' animated (using the stroke-trick)
+// hidden on setup
+// (there's quiet a bit of code to cope with markers as well, they are shown/hidden as needed)
+const animateDrawLines = {
+	setup: (el) => {
+		const paths = el.querySelectorAll('path, line');
+		el.setAttribute('data-appearTime', 0.7);
+
+		paths.forEach((path) => {
+			var length = path.getTotalLength();
+			// Clear any previous transition
+			path.style.transition = path.style.WebkitTransition = 'none';
+			// Set up the starting positions
+			path.style.strokeDasharray = length + ' ' + length;
+			path.style.strokeDashoffset = length;
+			path.style['fill-opacity'] = '0';
+
+			// the arrow 'heads' are defined as separate markers, remove / add them at
+			// the appropriate time
+			let markerStart = path.getAttribute('marker-start');
+			if (markerStart) {
+				path.setAttribute('data-marker-start', markerStart);
+				path.removeAttribute('marker-start');
+			}
+			let markerEnd = path.getAttribute('marker-end');
+			if (markerEnd) {
+				path.setAttribute('data-marker-end', markerEnd);
+				path.removeAttribute('marker-end');
+			}
+
+			// Trigger a layout so styles are calculated & the browser
+			// picks up the starting position before animating
+			path.getBoundingClientRect();
+		});
+	},
+	activate: (el) => {
+		const appearTime = el.getAttribute('data-appearTime') || 0.7;
+		const paths = el.querySelectorAll('path, line');
+		paths.forEach((path) => {
+			path.style.transition =
+				path.style.WebkitTransition = `stroke-dashoffset ${appearTime}s ease-in-out`;
+			path.style.strokeDashoffset = '0';
+			// would probably be better with 'transitionend'-events (But that appears to be a rather hot mess as well)
+			// this works for all uses I have, so meh
+			let markerEnd = path.getAttribute('data-marker-end');
+			if (markerEnd) {
+				setTimeout(
+					() => path.setAttribute('marker-end', markerEnd),
+					appearTime * 1000
+				);
+			}
+			let markerStart = path.getAttribute('data-marker-start');
+			if (markerStart) {
+				path.setAttribute('marker-start', markerStart);
+			}
+		});
+	},
+	deactivate: (el) => {
+		const appearTime = el.getAttribute('data-appearTime') || 0.7;
+
+		const paths = el.querySelectorAll('path, line');
+		paths.forEach((path) => {
+			var length = path.getTotalLength();
+			path.style.strokeDashoffset = length;
+			path.removeAttribute('marker-end'); // no timeout, should be gone as soon as path starts 'disappearing'
+			setTimeout(() => path.removeAttribute('marker-start'), appearTime * 1000);
+		});
+	},
+};
+
+// zoom in, opacity 0->1, scale 0.2->1
+const animateAppear = {
+	setup: (el) => {
+		// in order to scale correctly we need an affine transform that translate firsts
+		// (scale is done from the (0,0) of our svg, i.e. topleft, not from the center of the element we're scaling)
+		const bbox = el.getBBox();
+		const centerX = bbox.width / 2 + bbox.x;
+		const centerY = bbox.height / 2 + bbox.y;
+		const scaleF = 0.2;
+
+		let anim = el.animate(
+			[
+				{
+					opacity: 0.0,
+					transform: `translate(${centerX}px, ${centerY}px) scale(${scaleF}) translate(${-centerX}px, ${-centerY}px) `,
+				},
+			],
+			{ duration: 1, fill: 'forwards' }
+		);
+		anim.commitStyles();
+	},
+	activate: (el) => {
+		const bbox = el.getBBox();
+		const centerX = bbox.width / 2 + bbox.x;
+		const centerY = bbox.height / 2 + bbox.y;
+
+		const scaleF = 1;
+		let anim = el.animate(
+			{
+				opacity: 1.0,
+				transform: `translate(${centerX}px, ${centerY}px) scale(${scaleF}) translate(${-centerX}px, ${-centerY}px) `,
+			},
+
+			{ duration: 250, easing: 'ease-in-out', fill: 'forwards' }
+		);
+		anim.commitStyles();
+	},
+	deactivate: (el) => {
+		let anim = el.animate({ opacity: 0.0 }, { duration: 1, fill: 'forwards' });
+		anim.commitStyles();
+	},
+};
+
+export let SvgStepper = {
+	id: 'svgstepper',
+
+	init: (deck) => {
 		// if I'd ever feel the need, these could become options somehow
 		const highlightFirstAppearanceInCodeBlocks = true;
 
@@ -9,72 +186,66 @@ var SvgStepper =
 
 		let svgElements = new Set();
 
-		let snap = null; // for now, only one active svg
+		// let snap = null; // for now, only one active svg
 
 		// top is readjusted (default Reveal handling of vertically centering falls short if
 		// show/hide large portions of the slide)
 		let previousTop = -1;
 		let currentSection = undefined;
-
+		let currentExplanationDiv = null;
+		let explanations = new Map(); // map key is a Range object, value the explanation itself
 		function toArray(o) {
 			return Array.prototype.slice.call(o);
 		}
-
-		class Range {
-			// will parse a string of the form "1,2,3-7,9-12,14"
-			// and return an object with a 'range' key with [1,2,3,4,5,6,7,9,10,11,12,14] as an array of integers
-			// and a 'forever' key, either true or false, denoting if all indices greater than the last are included
-			// (constructed by +, e.g. "1-4,5,8+")
-			constructor(stringRange) {
-				stringRange = stringRange.trim();
-				this.range = [];
-				// if the last char is a +, the range includes all indexes greater than the last one parsed
-				this.forever = false;
-				if (stringRange.slice(-1) === '+') {
-					this.forever = true;
-					stringRange = stringRange.slice(0, -1);
+		function showHighlightCurrentIndex() {
+			if (currentIndex > maxIndex) {
+				// at the end of our inner navigation, remove all keyboard overrides
+				// (and hence, give control back to Reveal)
+				if (currentExplanationDiv) {
+					currentExplanationDiv.remove();
 				}
-				if (stringRange.length) {
-					stringRange.split(',').forEach((el) => {
-						let dashRange = el.split('-');
-						if (dashRange.length === 1) {
-							this.range.push(parseInt(el));
-						} else {
-							let from = parseInt(dashRange[0]);
-							let to = parseInt(dashRange[1]);
-							if (to >= from) {
-								for (let i = from; i <= to; ++i) {
-									this.range.push(i);
-								}
-							} else {
-								console.error(`range a-b with a > b "${from}-${to}"`);
-							}
-						}
-					});
+				Reveal.configure({
+					keyboard: {},
+					touches: {},
+				});
+				Reveal.navigateNext();
+			} else if (currentIndex <= 0) {
+				if (currentExplanationDiv) {
+					currentExplanationDiv.remove();
 				}
-			}
-
-			max() {
-				if (this.range.length === 0) {
-					return 0;
+				Reveal.configure({
+					keyboard: {},
+					touches: {},
+				});
+				Reveal.navigatePrev();
+			} else {
+				if (currentExplanationDiv) {
+					currentExplanationDiv.remove();
 				}
-				return Math.max(...this.range);
-			}
-
-			firstIndex() {
-				if (this.range.length === 0) {
-					return -1;
-				}
-				return this.range[0];
-			}
-
-			includes(index) {
-				return (
-					this.range.includes(index) || (this.forever && index > this.max())
+				svgElements.forEach((el) => el.update(currentIndex));
+				readjustTopOfCurrentSection();
+				currentExplanationDiv = createExplanationDivForIndex(
+					currentIndex,
+					explanations
 				);
+				console.log(currentExplanationDiv);
+				if (currentExplanationDiv) {
+					currentSection.appendChild(currentExplanationDiv);
+				}
 			}
 		}
 
+		// these functions will be bound to all the keys
+		// which are used to advance a slide (down, right, etc.)
+		function innerNavigateNext() {
+			currentIndex++;
+			showHighlightCurrentIndex();
+		}
+
+		function innerNavigatePrevious() {
+			currentIndex--;
+			showHighlightCurrentIndex();
+		}
 		// slides are centered vertically by once setting the 'top' style based
 		// on the scrollHeight / contentHeight, because I dynamically hide/show
 		// elements this scrollHeight changes, but the top is not reapplied,
@@ -103,221 +274,59 @@ var SvgStepper =
 				// console.log(`prev ${previousTop}, new ${newTop}`);
 			}
 		}
-
-		class SvgElement {
-			constructor(el, showRange, { activate, deactivate }) {
-				this.svgElement = el;
-				this.showRange = showRange;
-				this.activate = activate;
-				this.deactivate = deactivate;
-			}
-			update(index) {
-				if (!this.showRange || this.showRange.includes(index)) {
-					this.activate(this.svgElement);
-					// this.svgElement.animate({ opacity: 1.0 }, 250, mina.easeinout);
-				} else {
-					this.deactivate(this.svgElement);
-					// this.svgElement.animate({ opacity: 0.0 }, 0);
-				}
-			}
-		}
-
-		function showHighlightCurrentIndex() {
-			if (currentIndex > maxIndex) {
-				// at the end of our inner navigation, remove all keyboard overrides
-				// (and hence, give control back to Reveal)
-				Reveal.configure({
-					keyboard: {},
-					touches: {},
-				});
-				Reveal.navigateNext();
-			} else if (currentIndex <= 0) {
-				Reveal.configure({
-					keyboard: {},
-					touches: {},
-				});
-				Reveal.navigatePrev();
-			} else {
-				svgElements.forEach((el) => el.update(currentIndex));
-				readjustTopOfCurrentSection();
-			}
-		}
-
-		// these functions will be bound to all the keys
-		// which are used to advance a slide (down, right, etc.)
-		function innerNavigateNext() {
-			currentIndex++;
-			showHighlightCurrentIndex();
-		}
-
-		function innerNavigatePrevious() {
-			currentIndex--;
-			showHighlightCurrentIndex();
-		}
-
-		const showHideActivation = {
-			setup: (el) => {
-				el.opacity = 0.0;
-			},
-			activate: (el) => {
-				el.animate({ opacity: 1.0 }, 250, mina.easeinout);
-			},
-			deactivate: (el) => {
-				el.animate({ opacity: 0.0 }, 0);
-			},
-		};
-
-		const animateAppear = {
-			setup: (el) => {
-				const paths = el.selectAll('path');
-				paths.forEach((pathEl) => {
-					const path = pathEl.node;
-					var length = path.getTotalLength();
-					// Clear any previous transition
-					path.style.transition = path.style.WebkitTransition = 'none';
-					// Set up the starting positions
-					path.style.strokeDasharray = length + ' ' + length;
-					path.style.strokeDashoffset = length;
-					path.style['fill-opacity'] = '0';
-
-					// Trigger a layout so styles are calculated & the browser
-					// picks up the starting position before animating
-					path.getBoundingClientRect();
-				});
-			},
-			activate: (el) => {
-				const paths = el.selectAll('path');
-				paths.forEach((pathEl) => {
-					const path = pathEl.node;
-					console.log(path);
-					console.log(typeof pathEl);
-					console.log(Object.keys(path));
-					console.log(pathEl['node']);
-					// var length = path.getTotalLength();
-					// // Clear any previous transition
-					// path.style.transition = path.style.WebkitTransition = 'none';
-					// // Set up the starting positions
-					// path.style.strokeDasharray = length + ' ' + length;
-					// path.style.strokeDashoffset = length;
-					// // Trigger a layout so styles are calculated & the browser
-					// // picks up the starting position before animating
-					// path.getBoundingClientRect();
-					// Define our transition
-					path.style.transition = path.style.WebkitTransition =
-						'stroke-dashoffset 0.7s ease-in-out';
-					// Go!
-					// path.style.transition = 'stroke-dashoffset 2s ease-in-out ';
-					path.style.strokeDashoffset = '0';
-					path.style['fill-opacity'] = '1';
-
-					// path.style['transition-delay'] = '1s';
-				});
-			},
-			deactivate: (el) => {
-				const paths = el.selectAll('path');
-				paths.forEach((pathEl) => {
-					const path = pathEl.node;
-					var length = path.getTotalLength();
-
-					path.style.strokeDashoffset = length;
-				});
-			},
-		};
-
-		// constructs the lists and sets up inner navigation
-		// when a fragment with the correct attribute is encountered
-		Reveal.addEventListener('fragmentshown', function (event) {
-			currentSection = event.fragment; // not correct, but using it the first time will adjust this
+		// Reveal.addEventListener('slidetransitionend', function (event) {
+		Reveal.addEventListener('slidechanged', function (event) {
+			currentSection = event.currentSlide;
 			let needsInnerNavigation = false;
 			currentIndex = 1;
 			maxIndex = -1;
+			explanations = new Map();
+			currentExplanationDiv = null;
 
-			if (event.fragment.hasAttribute('svg-step')) {
+			console.log(explanations);
+
+			let svgEmbedElements = currentSection.querySelectorAll(
+				'object[data-svgstep]'
+			);
+			toArray(svgEmbedElements).forEach((el) => {
 				needsInnerNavigation = true;
 				svgElements = new Set();
 				maxIndex = 2; // set it to something > 1, will be overriden by either codestep, or the ASYNC loading of svg
-				// (if there's nothing but a svg, we try to show index 1, while max is still -1 (loading is async),
-				// and we move to the next slide)
-				toArray(event.fragment.getElementsByTagName('svg'))
-					.filter((el) => el.classList.contains('svg-section'))
-					.forEach((el) => {
-						if (false && snap) {
-							console.error(
-								`I can only cope with one svg element inside a svg-step div (for now)`
-							);
-						}
-						snap = new Snap(`#${el.getAttribute('id')}`);
 
-						// setTimeout(() => {
-						Snap.load(`${el.getAttribute('snapfile')}`, (data) => {
-							// the read file gets appended, so if we go back / fwd we would end up
-							// with multiple svg's drawn on top of each other, so remove previous one (if any)
-							if (snap.children()) {
-								snap.children().forEach((x) => {
-									x.remove();
-								});
-							}
-							// console.log(data);
-							let defs = data.select('defs');
-							snap.append(defs);
-							let g = data.select('#svgstep');
-							if (!g) {
-								console.error(
-									"Codestepper needs a 'g' canvas with the id svgstep"
-								);
-							}
-							snap.append(g);
-							// set viewBox to the same one it was in the file
-							// slightly adjusted (to cope with strokes on the edge)
-							// (viewBox is a string with four numbers, so split, convert, join)
-							// (assuming no need for more than 4 pixels... obviously it would be smarter to parse all stroke widths and yada yada)
-							let viewBox = snap.getBBox().vb.split(' ');
-							viewBox = viewBox.map((val, i) => {
-								return i < 2 ? Number(val) - 4 : Number(val) + 8;
-							});
+				const parses = [
+					{ prefix: 'svgstep_show_', activator: showHideActivation },
+					{ prefix: 'svgstep_anim_drawline_', activator: animateDrawLines },
+					{ prefix: 'svgstep_anim_appear_', activator: animateAppear },
+				];
 
-							el.setAttribute('viewBox', viewBox.join(' '));
-							console.log(`viewBox set to ${viewBox}`);
+				const svgDoc = el.getSVGDocument();
+				parses.forEach((toParse) => {
+					let gs = svgDoc.querySelectorAll(`g[id*='${toParse.prefix}']`);
+					gs.forEach((item) => {
+						let elId = item.id;
+						let showStepRange = new Range('');
 
-							let x = g.selectAll("[id*='svgstep:']");
-
-							// let x = g.selectAll('.svgstep');
-							x.forEach((item) => {
-								let elId = item.attr('id');
-								showHideActivation.setup(item);
-								let showStepRange = new Range('');
-								if (elId.includes('svgstep:')) {
-									showStepRange = new Range(elId.substring('svgstep: '.length));
-								}
-
-								svgElements.add(
-									new SvgElement(item, showStepRange, showHideActivation)
-								);
-								maxIndex = Math.max(maxIndex, showStepRange.max());
-							});
-
-							let appearItems = g.selectAll("[id*='animateappear:']");
-							appearItems.forEach((item) => {
-								console.log(item);
-								let elId = item.attr('id');
-								animateAppear.setup(item);
-								let showStepRange = new Range('');
-								if (elId.includes('animateappear:')) {
-									showStepRange = new Range(
-										elId.substring('animateappear: '.length)
-									);
-								}
-
-								svgElements.add(
-									new SvgElement(item, showStepRange, animateAppear)
-								);
-								maxIndex = Math.max(maxIndex, showStepRange.max());
-							});
-
-							showHighlightCurrentIndex(); // loading is async, so make sure our svg is loaded according to current index
-						});
-						//}, 2000);
+						let rangeString = elId.substring(toParse.prefix.length);
+						showStepRange = new Range(rangeString);
+						svgElements.add(
+							new SvgElement(item, showStepRange, toParse.activator)
+						);
+						maxIndex = Math.max(maxIndex, showStepRange.max());
 					});
+				});
+
+				// showHighlightCurrentIndex();
+			});
+			const explanationDiv = currentSection.querySelector('div[explanation]');
+			if (explanationDiv) {
+				let codeExplanations = parseCodeExplanations(explanationDiv);
+				for (const [range, node] of codeExplanations.entries()) {
+					explanations.set(range, node);
+					// this.usedIndices.merge(range);
+					maxIndex = Math.max(maxIndex, range.max());
+				}
+				// explanationDiv.remove();
+				explanationDiv.style.display = 'none';
 			}
 
 			if (needsInnerNavigation) {
@@ -344,4 +353,5 @@ var SvgStepper =
 				});
 			}
 		});
-	})();
+	},
+};
