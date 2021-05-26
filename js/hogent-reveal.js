@@ -23,11 +23,11 @@ Reveal.initialize({
 	dependencies: [
 		// { src: 'plugin/codestepper/svgstepper.js' },
 		{
-			src: 'plugin/hogent-style.js',
+			src: 'codeslides/plugin/hogent-style.js',
 			callback: () => hogentStyle.initialize(),
 		},
 		{
-			src: 'plugin/chart.xkcd/chart.xkcd.js',
+			src: 'codeslides/plugin/chart.xkcd/chart.xkcd.js',
 		},
 	],
 }).then(() => {

@@ -469,13 +469,13 @@ pre {
   right: 25px;
 } */
 body.hogent-white-text:after {
-	content: url(../../img/logo_white.png);
+	content: url(../../codeslides/img/logo_white.png);
 	position: fixed;
 	bottom: 25px;
 	right: 25px;
 }
 body:not(.hogent-white-text):after {
-	content: url(../../img/logo_black.png);
+	content: url(../../codeslides/img/logo_black.png);
 	position: fixed;
 	bottom: 25px;
 	right: 25px;
