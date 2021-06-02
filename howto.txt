@@ -30,25 +30,33 @@ keybindings.json
 
 User snippets, HTML
 {
-    "codestep plugin": {
-		"prefix": "codestep",
-		"body": [
-			"<div class='fragment' code-step>",
-			"  <pre class='typescript'><code data-noescape data-trim>",
-			"  </code></pre>",
-			"  <div class='samespot'>",
-			"    <p show-steps='1'>$1</p>",
-			"  </div>",
-		    "</div>"
-		],
-		"description": "startpoint for the codestepper thing"
-	},
-	"console" : {
-		"prefix": "console",
-		"body": [
-			"<pre data-trim class='console'>",
-			"  <span class='prompt'>~$</span>${0}",
-			"</pre>"
-		]
-	}
+   "codestepper": {
+    "prefix": "codesteps",
+    "body": [
+      "<div codesteps>",
+      "  <pre class='typescript'> $1 <code class='codesteps' data-noescape data-trim>",
+      "  $2",
+      "  </code><span class='githubcommit'></span> </pre>",
+      "  <div explanation>",
+      "    <span step='1'> </span>",
+      "  </div>",
+      "</div>"
+    ],
+    "description": "add a codestepper div"
+  },
+  "console": {
+    "prefix": "console",
+    "body": [
+      "<pre data-trim class='console'>",
+      "  <span class='prompt'>~$</span> $1",
+      "</pre>"
+    ],
+    "description": "add a console pre block"
+  },
+  "spanstep" : {
+    "prefix": "spanstep",
+    "body": [
+      "<span step=\"$1\">$0</span>"
+    ]
+  }
 }
