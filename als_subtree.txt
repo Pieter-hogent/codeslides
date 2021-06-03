@@ -1,0 +1,16 @@
+mkdir newslides
+cd newslides
+
+newslides> git init
+
+// op een verse git init, git subtree add doen lukt niet, hij klaagt over 
+// "fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree."
+// eerst een lege file toevoegen en committen fixt dat...
+
+newslides> touch .gitignore
+// (of nog beter: degelijjke gitignore toevoegen)
+newslides> git add .
+newslides> git commit -m "add gitignore"
+
+
+newslides> git subtree add --prefix codeslides/ git@github.com:Pieter-hogent/codeslides.git master
