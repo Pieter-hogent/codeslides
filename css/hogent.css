@@ -475,12 +475,16 @@ body.hogent-white-text:after {
 	position: fixed;
 	bottom: 25px;
 	right: 25px;
+    /* Fixes HOGENT logo appearing behind slide background */
+    z-index: 100;
 }
 body:not(.hogent-white-text):after {
 	content: url(../../codeslides/img/logo_black.png);
 	position: fixed;
 	bottom: 25px;
 	right: 25px;
+    /* Fixes HOGENT logo appearing behind slide background */
+    z-index: 100;
 }
 
 .hogent-white-text h3 {
