@@ -459,8 +459,10 @@ pre {
 .reveal .title-slide {
 	background-color: black;
 	color: white;
+    /* Fixes wrong styling of HOGENT's H on browsers other than Safari */
+    height: 100%;
 }
-/* 
+/*
 .reveal .title-slide:after,
 .reveal .contents-slide:after {
   content: url(../../img/logo_white.png);
