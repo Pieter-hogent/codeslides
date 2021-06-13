@@ -634,3 +634,15 @@ body:not(.hogent-white-text):after {
 	/* reveal sets this (class refers to highlight js code block) to 100% for some reason, not convenient when inside nopres part */
 	min-height: 0%;
 }
+
+.remark {
+    font-size: .8em;
+    background-color: #f6e58d;
+	border-color: #fdcb6e;
+	border-width: 2px;
+	border-style: solid;
+	padding: 10px;
+	box-shadow: 5px 5px 30px grey;
+	margin-bottom: 15px;
+    display: inline-block;
+}
