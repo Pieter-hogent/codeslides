@@ -14,3 +14,6 @@ newslides> git commit -m "add gitignore"
 
 
 newslides> git subtree add --prefix codeslides/ git@github.com:Pieter-hogent/codeslides.git master
+
+// en dan later, changes ook 'door pushen'
+newslides> git subtree push --prefix codeslides/ git@github.com:Pieter-hogent/codeslides.git master
