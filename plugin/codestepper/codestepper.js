@@ -22,7 +22,25 @@ export const CodeStepper =
 				this.usedIndices = new Range();
 				this.cssId = undefined; // remember id and add it to first slide when splitting
 				[this.header, this.code, this.footer] = this.splitSection(sectionEl);
+				if (this.code) {
+					this.parseMaxIndexFromCodeSection(this.code);
+				}
 				this._convertedSections = null;
+			}
+
+			parseMaxIndexFromCodeSection(node) {
+				let hstepDivs = node.querySelectorAll('span[hstep]');
+				hstepDivs.forEach((hstepDiv) => {
+					const highlightRange = new Range(hstepDiv.getAttribute('hstep'));
+					this.usedIndices.merge(highlightRange);
+					this.maxIndex = Math.max(this.maxIndex, highlightRange.max());
+				});
+				let sstepDivs = node.querySelectorAll('span[sstep]');
+				sstepDivs.forEach((sstepDiv) => {
+					const showRange = new Range(sstepDiv.getAttribute('sstep'));
+					this.usedIndices.merge(showRange);
+					this.maxIndex = Math.max(this.maxIndex, showRange.max());
+				});
 			}
 
 			splitSection(sectionEl) {
@@ -96,11 +114,13 @@ export const CodeStepper =
 						) {
 							sstepDiv.classList.add('code-firstshown');
 						}
-					} else if (showRange.includes(idx)) {
+					}
+					if (showRange.includes(idx)) {
 						sstepDiv.removeAttribute('hidden');
 						if (
-							(idx != 1 && this.highlightFirstShown) ||
-							sstepDiv.hasAttribute('nhf')
+							((idx != 1 && this.highlightFirstShown) ||
+								sstepDiv.hasAttribute('nhf')) &&
+							showRange.firstIndex() !== idx
 						) {
 							sstepDiv.classList.remove('code-firstshown');
 						}
@@ -201,10 +221,8 @@ export const CodeStepper =
 					if (sectionMustExpand(sec)) {
 						let newSection = new CodeSection(sec);
 						// sec.parentNode.replaceChild(newSection.verticalLayoutSection, sec);
-						let [
-							firstNewSection,
-							...otherNewSections
-						] = newSection.convertedSections;
+						let [firstNewSection, ...otherNewSections] =
+							newSection.convertedSections;
 
 						sec.parentNode.replaceChild(firstNewSection, sec);
 						let lastAdded = firstNewSection;

@@ -283,8 +283,6 @@ export let SvgStepper = {
 			explanations = new Map();
 			currentExplanationDiv = null;
 
-			console.log(explanations);
-
 			let svgEmbedElements = currentSection.querySelectorAll(
 				'object[data-svgstep]'
 			);

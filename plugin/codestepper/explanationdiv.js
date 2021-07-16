@@ -84,6 +84,9 @@ export class Range {
  */
 export function parseCodeExplanations(explanationDiv) {
 	let codeExplanations = new Map();
+	if (!explanationDiv) {
+		return codeExplanations;
+	}
 
 	let explanationNodes = explanationDiv.querySelectorAll('span[step]');
 	explanationNodes.forEach((explanationNode) => {
