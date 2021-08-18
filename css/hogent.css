@@ -588,8 +588,8 @@ body:not(.hogent-white-text):after {
 	grid-gap: 10px;
 }
 
-.reveal .two-columns pre {
-	display: inline-grid;
+.reveal .two-columns code {
+	min-height: 0;
 }
 
 .reveal .two-columns .column-left {
