@@ -58,7 +58,7 @@ export class Range {
 	merge(rhsRange) {
 		this.forever = this.forever || rhsRange.forever;
 		this.range = [...this.range, ...rhsRange.range]
-			.sort()
+			.sort((a, b) => a - b) // default sort is alphabetical
 			.filter(function (item, pos, ary) {
 				return !pos || item != ary[pos - 1];
 			}); // removes if equal to previous, i.e. removes duplicates because sorted
