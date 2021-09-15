@@ -459,8 +459,8 @@ pre {
 .reveal .title-slide {
 	background-color: black;
 	color: white;
-    /* Fixes wrong styling of HOGENT's H on browsers other than Safari */
-    height: 100%;
+	/* Fixes wrong styling of HOGENT's H on browsers other than Safari */
+	height: 100%;
 }
 /*
 .reveal .title-slide:after,
@@ -475,16 +475,16 @@ body.hogent-white-text:after {
 	position: fixed;
 	bottom: 25px;
 	right: 25px;
-    /* Fixes HOGENT logo appearing behind slide background */
-    z-index: 100;
+	/* Fixes HOGENT logo appearing behind slide background */
+	z-index: 100;
 }
 body:not(.hogent-white-text):after {
 	content: url(../../codeslides/img/logo_black.png);
 	position: fixed;
 	bottom: 25px;
 	right: 25px;
-    /* Fixes HOGENT logo appearing behind slide background */
-    z-index: 100;
+	/* Fixes HOGENT logo appearing behind slide background */
+	z-index: 100;
 }
 
 .hogent-white-text h3 {
@@ -601,6 +601,18 @@ body:not(.hogent-white-text):after {
 	height: 80%;
 }
 
+.reveal .grid-week {
+	font-size: 0.7em;
+	border-top: 1px solid #dfdfdf;
+}
+
+.reveal .grid-item {
+	font-size: 0.8em;
+	border-top: 1px solid #dfdfdf;
+	border-left: 1px solid #dfdfdf;
+	text-align: left;
+	padding: 7 10 7 10;
+}
 /** no-presentation slides **/
 .reveal section[nopres] {
 	font-size: 0.6em;
@@ -636,13 +648,13 @@ body:not(.hogent-white-text):after {
 }
 
 .remark {
-    font-size: .8em;
-    background-color: #f6e58d;
+	font-size: 0.8em;
+	background-color: #f6e58d;
 	border-color: #fdcb6e;
 	border-width: 2px;
 	border-style: solid;
 	padding: 10px;
 	box-shadow: 5px 5px 30px grey;
 	margin-bottom: 15px;
-    display: inline-block;
+	display: inline-block;
 }
